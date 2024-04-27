@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from array import array as _array, typecodes
 from typing import Generic, Iterable, TypeVar
+import sys
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 __all__ = ('SByteArray', 'ByteArray',
            'CharArray', 'UCharArray',  # aliases for byte arrays
            'UnicodeArray',
@@ -31,8 +32,12 @@ SByteArray = ArrayType('b', int)
 """Stores signed chars (signed bytes). [-128; 127]"""
 ByteArray = ArrayType('B', int)
 """Stores unsigned chars (unsigned bytes). [0; 255]"""
-UnicodeArray = ArrayType('u', str)
-"""Stores Unicode strings."""
+if sys.version_info >= (3, 13):
+    UnicodeArray = ArrayType('w', str)
+    """Stores Unicode strings."""
+else:
+    UnicodeArray = ArrayType('u', str)
+    """Stores Unicode strings."""
 ShortArray = ArrayType('h', int)
 """Stores signed 16-bit integers. [-32768; 32767]"""
 UShortArray = ArrayType('H', int)
@@ -42,7 +47,7 @@ IntArray = ArrayType('i', int)
 Stores *at least* signed 16-bit integers. [-32768; 32767]
 
 Note:
-    Python documentation states that ``array('i')`` elements *minimal* size is **2 bytes**.
+    Python documentation states that ``array('i')`` elements *minimal* size is **2 bytes** (**16 bits**).
 
     However, in most cases you deal with **32-bit** integers. [-2147483648; 2147483647]
 """
@@ -51,7 +56,7 @@ UIntArray = ArrayType('I', int)
     Stores at least unsigned 16-bit integers. [0; 65535]
 
 Note:
-    Python documentation states that ``array('I')`` elements *minimal* size is **2 bytes**.
+    Python documentation states that ``array('I')`` elements *minimal* size is **2 bytes** (**16 bits**).
 
     However, in most cases you deal with **32-bit** integers. [0; 4294967295]
 """
