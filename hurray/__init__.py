@@ -20,29 +20,28 @@ T = TypeVar('T')
 
 
 class ArrayType(Generic[T]):
-    def __init__(self, typecode: str, _type: type[T]) -> None:
+    def __init__(self, typecode: str):
         self.typecode = typecode
-        self.type = _type
 
-    def __call__(self, initializer: bytes | Iterable[T] = (), /) -> _array[T]:
+    def __call__(self, initializer: bytes | Iterable[T] = (), /) -> _array:
         return _array(self.typecode, initializer)
 
 
-SByteArray = ArrayType('b', int)
+SByteArray = ArrayType[int]('b')
 """Stores signed chars (signed bytes). [-128; 127]"""
-ByteArray = ArrayType('B', int)
+ByteArray = ArrayType[int]('B')
 """Stores unsigned chars (unsigned bytes). [0; 255]"""
 if sys.version_info >= (3, 13):
-    UnicodeArray = ArrayType('w', str)
+    UnicodeArray = ArrayType[str]('w')
     """Stores Unicode strings."""
 else:
-    UnicodeArray = ArrayType('u', str)
+    UnicodeArray = ArrayType[str]('u')
     """Stores Unicode strings."""
-ShortArray = ArrayType('h', int)
+ShortArray = ArrayType[int]('h')
 """Stores signed 16-bit integers. [-32768; 32767]"""
-UShortArray = ArrayType('H', int)
+UShortArray = ArrayType[int]('H')
 """Stores unsigned 16-bit integers. [0; 65535]"""
-IntArray = ArrayType('i', int)
+IntArray = ArrayType[int]('i')
 """
 Stores *at least* signed 16-bit integers. [-32768; 32767]
 
@@ -51,7 +50,7 @@ Note:
 
     However, in most cases you deal with **32-bit** integers. [-2147483648; 2147483647]
 """
-UIntArray = ArrayType('I', int)
+UIntArray = ArrayType[int]('I')
 """
     Stores at least unsigned 16-bit integers. [0; 65535]
 
@@ -60,17 +59,17 @@ Note:
 
     However, in most cases you deal with **32-bit** integers. [0; 4294967295]
 """
-LongArray = ArrayType('l', int)
+LongArray = ArrayType[int]('l')
 """Stores signed 32-bit integers. [-2147483648; 2147483647]"""
-ULongArray = ArrayType('L', int)
+ULongArray = ArrayType[int]('L')
 """Stores unsigned 32-bit integers. [0; 4294967295]"""
-LongLongArray = ArrayType('q', int)
+LongLongArray = ArrayType[int]('q')
 """Stores signed 64-bit integers. [−9223372036854775807; 9223372036854775807]"""
-ULongLongArray = ArrayType('Q', int)
+ULongLongArray = ArrayType[int]('Q')
 """Stores signed 64-bit integers. [0; 18446744073709551615]"""
-FloatArray = ArrayType('f', float)
+FloatArray = ArrayType[float]('f')
 """Stores single-precision floating-point numbers."""
-DoubleArray = ArrayType('d', float)
+DoubleArray = ArrayType[float]('d')
 """Stores double-precision floating-point numbers."""
 
 CharArray = SByteArray
