@@ -4,7 +4,7 @@ from array import array as _array, typecodes
 from typing import Generic, Iterable, TypeVar
 import sys
 
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 __all__ = ('SByteArray', 'ByteArray',
            'CharArray', 'UCharArray',  # aliases for byte arrays
            'UnicodeArray',
